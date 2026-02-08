@@ -18,19 +18,18 @@ win = font1.render('YOU WIN!', True, (255, 255, 255))
 lose = font1.render('omg kalah 0_0', True, (180, 0, 0))
 
 # image
-img_back = "I_did_not_prepare_for_a_presentation_omg_bro_I_am_so_gonna_fail.jpg.jpeg" or "grass.jpg"
+img_back = "grass.jpg"
 img_hero = "shovel_thing_idk.png"
-img_enemy = "ant_enemy_you_gonna_die_lmao.png"  # enemy
+img_enemy = "idk_at_this_point_bro.png" # enemy :) :0 :(
 img_bullet = "OMG_SOCIAL_INTERACTION_evaporates_lol_XD.png"
-img_ast = "idk_at_this_point_bro.png"  # asteroid
 
 score = 0
 lost = 0
 max_lost = 3
 
-goal = 10  # how many ships need to be hit to win
+goal = 10  # ini adalah goal yang kamu butuh tapi kamu tidak akan pernah tau karena ngak pernah akan menang :)
 
-life = 3  # Life Point
+life = 3  # kalau abis yaa... matilah memang apa lagi woy
 
 
 class GameSprite(sprite.Sprite):
@@ -49,7 +48,7 @@ class GameSprite(sprite.Sprite):
 
 
 class Player(GameSprite):
-    # method to control the sprite with arrow keys
+    # silly kontrol untuk silly character :3
     def update(self):
         keys = key.get_pressed()
         if keys[K_LEFT] and self.rect.x > 5:
@@ -81,7 +80,7 @@ class Bullet(GameSprite):
             self.kill()
 
 
-# create a window
+# silly coding :3 :3
 win_width = 700
 win_height = 500
 display.set_caption("Shooter Game Tapi Ngak Tau Lah - Hatta :)")
@@ -96,19 +95,14 @@ for i in range(1, 6):
     monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
     monsters.add(monster)
 
-asteroids = sprite.Group()
-for i in range(1, 3):
-    asteroid = Enemy(img_ast, randint(30, win_width - 30), -40, 80, 50, randint(1, 7))
-    asteroids.add(asteroid)
-
 bullets = sprite.Group()
 finish = False
 
-# Main loop
+# LOOPING???? NAHHHH >:(
 run = True
 
-rel_time = False  # flag in charge of reload
-num_fire = 0  # variable to count shots
+rel_time = False  # LOL
+num_fire = 0  # idk apa untuk dibilangin
 
 while run:
     for e in event.get():
@@ -117,18 +111,18 @@ while run:
 
         elif e.type == KEYDOWN:
             if e.key == K_SPACE:
-                # fire_sound.play()
-                # ship.fire()
+                # tembak suara
+                # tembak
 
-                # check how many shots have been fired and whether reload is in progress
-                if num_fire < 8 and rel_time == False:
+                # reload
+                if num_fire < 10000 and rel_time == False:
                     num_fire = num_fire + 1
                     fire_sound.play()
                     ship.fire()
 
-                if num_fire >= 8 and rel_time == False:  # if the player fired 8 shots
-                    last_time = timer()  # record time when this happened
-                    rel_time = True  # set the reload flag
+                if num_fire >= 10000 and rel_time == False:  # if the player fired 8 shots
+                    last_time = timer()  # moderator
+                    rel_time = True  # no bullets?? :(
 
     if not finish:
         window.blit(background, (0, 0))
@@ -142,42 +136,38 @@ while run:
         ship.update()
         monsters.update()
         bullets.update()
-        asteroids.update()
 
         ship.reset()
         monsters.draw(window)
         bullets.draw(window)
-        asteroids.draw(window)
 
         if rel_time == True:
-            now_time = timer()  # read time
+            now_time = timer()  # timer :/
 
-            if now_time - last_time < 3:  # before 3 seconds are over, display reload message
+            if now_time - last_time < 3:  # beep boop pow boom kablam!!!
                 reload = font2.render('Wait, reload...', 1, (150, 0, 0))
                 window.blit(reload, (260, 460))
             else:
-                num_fire = 0  # set the bullets counter to zero
-                rel_time = False  # reset the reload flag
+                num_fire = 0  # no bullets? :( (2)
+                rel_time = False  # same thing basically :/
 
-        # bullet-monster collision check (both monster and bullet disappear upon touching)
+        # IUSBGILSBNILVRBSLNVSIULVNHVIUSNHUNHKUDHLVNISUNHVISJDOFJIOSJ
         collides = sprite.groupcollide(monsters, bullets, True, True)
         for c in collides:
-            # this loop will be repeated as many times as monsters are killed
+            # SOCIAL INTERACTION???? *evaporates*
             score = score + 1
             monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
             monsters.add(monster)
 
-        # possible loss: missed too many or the character collided with the enemy
+        # :)
         if sprite.spritecollide(ship, monsters, False) or lost >= max_lost:
-            finish = True  # lost, set the background and no more sprite control.
+            finish = True  # :0
             window.blit(lose, (200, 200))
 
-        # win check: how many points did you score?
+        # :D
         if score >= goal:
             finish = True
             window.blit(win, (200, 200))
 
         display.update()
     time.delay(50)
-
-
